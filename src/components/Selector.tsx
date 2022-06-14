@@ -1,31 +1,44 @@
-import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import React, { useState } from "react";
+import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
+import React, { FC, useState } from "react";
+import { IOption } from "../constants/contractFields";
 
-type SelectOptionType = {
-  value: string;
-  label: string;
-};
+const CustomSelect = styled(Select)`
+  width: 280px;
+  height: 32px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: left;
+  line-height: 22px;
+`;
+
+const CustomMenuItem = styled(MenuItem)`
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+`;
+
 type Props = {
-  options: SelectOptionType[];
+  options?: IOption[];
 };
 
-export const Selector = (props: Props) => {
+export const Selector: FC<Props> = (props) => {
   const [region, setRegion] = useState("Almaty");
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
     setRegion(event.target.value as string);
   };
 
   return (
-    <Select
-      value={region}
-      defaultValue={region}
-      onChange={handleChange}
-      sx={{ width: "280px" }}
-    >
-      {props.options.map((option) => (
-        <MenuItem value={option.value}>{option.label}</MenuItem>
+    <CustomSelect value={region} defaultValue={region} onChange={handleChange}>
+      {props.options?.map((option) => (
+        <CustomMenuItem value={option.value} key={option.value}>
+          {option.label}
+        </CustomMenuItem>
       ))}
-    </Select>
+    </CustomSelect>
   );
 };

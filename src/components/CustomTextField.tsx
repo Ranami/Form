@@ -1,12 +1,12 @@
-import { TextField } from "@mui/material";
-import React from "react";
+import { styled, TextField } from "@mui/material";
+import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 
 type Props = {
-  type: string;
+  type?: string;
   label: string;
   required: boolean;
-  placeholder: string;
+  placeholder?: string;
 };
 
 type FormData = {
@@ -21,7 +21,12 @@ type FormData = {
   basisOfAuthority?: string;
 };
 
-export const CustomTextField = (props: Props) => {
+const StyledTextField = styled(TextField)`
+  display: block;
+  justify-self: center;
+`;
+
+export const CustomTextField: FC<Props> = (props) => {
   const {
     register,
     setValue,
@@ -32,7 +37,7 @@ export const CustomTextField = (props: Props) => {
     mode: "onChange",
   });
   return (
-    <TextField
+    <StyledTextField
       placeholder={props.placeholder}
       required={props.required}
       type={props.type}
@@ -43,8 +48,8 @@ export const CustomTextField = (props: Props) => {
           background: props.type === "number" ? "#F5F5F5" : "#FFFFFF",
         },
       }}
-      {...register(props.label, {
-        required: { value: props.required, message: "Fill field" },
+      {...register(props.label!, {
+        required: { value: props.required!, message: "Fill field" },
       })}
     />
   );

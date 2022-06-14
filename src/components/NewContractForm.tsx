@@ -1,19 +1,14 @@
 import {
   Box,
   FormControl,
-  FormControlLabel,
   FormLabel,
+  Grid,
   Input,
-  Radio,
-  RadioGroup,
   styled,
-  TextField,
   Typography,
 } from "@mui/material";
-import React, { FC } from "react";
-import { CustomRadioGroup } from "./CustomRadioGroup";
-import { CustomTextField } from "./CustomTextField";
-import { Selector } from "./Selector";
+import React from "react";
+import { ContractFieldsData } from "../constants/contractFields";
 
 const Wrapper = styled(Box)`
   text-align: center;
@@ -72,184 +67,42 @@ const BlockWrapper = styled("div")`
   width: 1160px;
 `;
 
-type Props = {};
+const LabelGrid = styled(Grid)`
+  width: 755px;
+  justify-content: right;
+`;
 
-interface IContractField {
-  label: string;
-  required: boolean;
-  defaultValue: string;
-  options: string[];
-  row: boolean;
-  Component: FC;
-}
+const ComponentGrid = styled(Grid)`
+  justify-content: left;
+`;
 
-export const ContractFieldsData = [
-  {
-    title: "Данные об организации",
-    fields: [
-      {
-        label: "Организационно-правовая форма",
-        required: true,
-        defaultValue: "АО",
-        options: ["АО", "ТОО", "ИП"],
-        row: true,
-        Component: CustomRadioGroup,
-      },
-      {
-        label: "БИН/ИИН",
-        required: true,
-        type: "number",
-        placeholder: "Введите",
-        Component: CustomTextField,
-      },
-      {
-        label: "Полное наименование",
-        type: "text",
-        placeholder: "Введите",
-        required: true,
-        Component: CustomTextField,
-      },
-    ],
-  },
-  {
-    title: "Данные представления",
-    fields: [
-      {
-        label: "Фамилия",
-        required: true,
-        placeholder: "Введите",
-        type: "text",
-        Component: CustomTextField,
-      },
-      {
-        label: "Имя",
-        placeholder: "Введите",
-        required: true,
-        type: "text",
-        Component: CustomTextField,
-      },
-      {
-        label: "Отчество",
-        type: "text",
-        placeholder: "Введите",
-        required: false,
-        Component: CustomTextField,
-      },
-      {
-        label: "Электронная почта",
-        placeholder: "Введите",
-        type: "text",
-        required: true,
-        Component: CustomTextField,
-      },
-      {
-        label: "Телефон",
-        type: "text",
-        placeholder: "Введите",
-        required: true,
-        Component: CustomTextField,
-      },
-      {
-        label: "Должность",
-        placeholder: "Введите",
-        type: "text",
-        required: true,
-        Component: CustomTextField,
-      },
-      {
-        label: "Основание полномочий",
-        placeholder: "Введите",
-        type: "text",
-        required: false,
-        Component: CustomTextField,
-      },
-    ],
-  },
-  {
-    title: "Адрес",
-    fields: [
-      {
-        label: "Регион",
-        type: "text",
-        required: true,
-        options: [
-          { value: "Almaty", label: "Алматинская область" },
-          { value: "East", label: "Восточно-Казахстанская область" },
-          { value: "West", label: "Западно-Казахстанская область" },
-        ],
-        Component: Selector,
-      },
-      {
-        label: "Населенный пункт / Район",
-        placeholder: "Введите",
-        type: "text",
-        required: true,
-        Component: CustomTextField,
-      },
-      {
-        label: "Юридический адрес",
-        placeholder: "Введите",
-        type: "text",
-        required: true,
-        Component: CustomTextField,
-      },
-    ],
-  },
-  {
-    title: "Банк",
-    fields: [
-      {
-        label: "Банк",
-        placeholder: "Напр. Halyk Bank",
-        type: "text",
-        required: true,
-        Component: CustomTextField,
-      },
-      {
-        label: "БИК",
-        placeholder: "Введите",
-        type: "number",
-        required: true,
-        Component: CustomTextField,
-      },
-      {
-        label: "ИИК",
-        placeholder: "Введите",
-        type: "text",
-        required: true,
-        Component: CustomTextField,
-      },
-      {
-        label: "Кбе",
-        placeholder: "0",
-        type: "text",
-        required: true,
-        Component: CustomTextField,
-      },
-    ],
-  },
-];
-
-export const NewContractForm = (props: Props) => {
+export const NewContractForm = () => {
   return (
     <Wrapper>
       <FormControl>
         {ContractFieldsData.map((block) => (
-          <BlockWrapper>
+          <BlockWrapper key={block.title}>
             <Header>{block.title}</Header>
+
             {block.fields.map(
               ({ label, Component = Input, required, ...field }) => (
-                <Field>
-                  <CustomLabel focused={false}>
-                    {required && <Asterisk>* </Asterisk>}
-                    {label}
-                    {!required && (
-                      <UnnecessaryText> (необязательный)</UnnecessaryText>
-                    )}
-                    :
-                  </CustomLabel>
-                  <Component {...field} label={label} required={required} />
-                </Field>
+                <Grid container direction="column" key={label}>
+                  <Field>
+                    <LabelGrid item container>
+                      <CustomLabel focused={false}>
+                        {required && <Asterisk>* </Asterisk>}
+                        {label}
+                        {!required && (
+                          <UnnecessaryText> (необязательный)</UnnecessaryText>
+                        )}
+                        :
+                      </CustomLabel>
+                    </LabelGrid>
+                    <ComponentGrid item container>
+                      <Component {...field} label={label} required={required} />
+                    </ComponentGrid>
+                  </Field>
+                </Grid>
               )
             )}
           </BlockWrapper>
