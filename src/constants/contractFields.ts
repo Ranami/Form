@@ -167,7 +167,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
       {
         label: "Кбе",
         placeholder: "0",
-        type: "text",
+        type: "number",
         required: true,
         Component: CustomTextField,
       },
