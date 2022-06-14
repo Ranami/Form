@@ -19,6 +19,13 @@ export type FormData = {
   phone: number;
   jobTitle: string;
   basisOfAuthority?: string;
+  region: string;
+  district: string;
+  legalAddress: string;
+  bank: string;
+  bik: number;
+  iik: string;
+  kbe: number;
 };
 
 const StyledTextField = styled(TextField)`
@@ -29,7 +36,6 @@ const StyledTextField = styled(TextField)`
 export const CustomTextField: FC<Props> = (props) => {
   const {
     register,
-    handleSubmit,
     formState: { isSubmitted },
     getFieldState,
   } = useForm({
