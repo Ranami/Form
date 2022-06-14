@@ -53,12 +53,12 @@ export const CustomTextField: FC<Props> = (props) => {
       error={
         isSubmitted &&
         getFieldState(props.label).isTouched &&
-        !!getFieldState("name").error
+        !!getFieldState(props.label).error
       }
       helperText={
         isSubmitted &&
         getFieldState(props.label).isTouched &&
-        !!getFieldState("name").error?.message
+        !!getFieldState(props.label).error?.message
       }
     />
   );
