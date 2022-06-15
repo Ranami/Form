@@ -5,7 +5,8 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import React, { FC } from "react";
+import { FC } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { IOption } from "../constants/contractFields";
 
 const CustomRadio = styled(Radio)`
@@ -25,24 +26,37 @@ type Props = {
   options?: IOption[];
   row?: boolean;
   required: boolean;
+  name: string;
 };
 
 export const CustomRadioGroup: FC<Props> = ({
   defaultValue,
   options,
   required,
+  name,
   ...rest
 }) => {
+  const { control } = useFormContext();
   return (
-    <RadioGroup defaultValue={defaultValue} {...rest}>
-      {options?.map((option) => (
-        <FormControlLabel
-          key={option.value}
-          control={<CustomRadio size="small" required={required} />}
-          value={option.label}
-          label={<CustomLabel>{option.value}</CustomLabel>}
-        />
-      ))}
-    </RadioGroup>
+    <>
+      <Controller
+        name={name}
+        control={control}
+        defaultValue={defaultValue}
+        render={({ field: { onChange, value, ref } }) => (
+          <RadioGroup value={value} onChange={onChange} {...rest}>
+            {options?.map((option) => (
+              <FormControlLabel
+                key={option.value}
+                control={<CustomRadio size="small" required={required} />}
+                value={option.value}
+                label={<CustomLabel>{option.value}</CustomLabel>}
+                inputRef={ref}
+              />
+            ))}
+          </RadioGroup>
+        )}
+      />
+    </>
   );
 };
