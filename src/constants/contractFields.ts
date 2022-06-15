@@ -25,6 +25,7 @@ export interface IComponentProps {
   type?: string;
   placeholder?: string;
   styleType?: StyleType;
+  name: string;
 }
 
 export const ContractFieldsData: IContractFieldsData[] = [
@@ -35,6 +36,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         label: "Организационно-правовая форма",
         required: true,
         defaultValue: "АО",
+        name: "companyType",
         options: [
           { label: "АО", value: "AO" },
           { label: "ТОО", value: "TOO" },
@@ -48,6 +50,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         required: true,
         type: "number",
         placeholder: "Введите",
+        name: "biin",
         Component: CustomTextField,
         styleType: "number",
       },
@@ -55,6 +58,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         label: "Полное наименование",
         type: "text",
         placeholder: "Введите",
+        name: "fullName",
         required: true,
         Component: CustomTextField,
         styleType: "text",
@@ -68,6 +72,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         label: "Фамилия",
         required: true,
         placeholder: "Введите",
+        name: "surname",
         type: "text",
         Component: CustomTextField,
         styleType: "text",
@@ -77,6 +82,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         placeholder: "Введите",
         required: true,
         type: "text",
+        name: "name",
         Component: CustomTextField,
         styleType: "text",
       },
@@ -85,6 +91,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         type: "text",
         placeholder: "Введите",
         required: false,
+        name: "middleName",
         Component: CustomTextField,
         styleType: "text",
       },
@@ -92,6 +99,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         label: "Электронная почта",
         placeholder: "Введите",
         type: "text",
+        name: "email",
         required: true,
         Component: CustomTextField,
         styleType: "text",
@@ -100,6 +108,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         label: "Телефон",
         type: "number",
         placeholder: "Введите",
+        name: "phone",
         required: true,
         Component: CustomTextField,
         styleType: "phone",
@@ -108,6 +117,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         label: "Должность",
         placeholder: "Введите",
         type: "text",
+        name: "job",
         required: true,
         Component: CustomTextField,
         styleType: "text",
@@ -115,6 +125,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
       {
         label: "Основание полномочий",
         placeholder: "Введите",
+        name: "autority",
         type: "text",
         required: false,
         Component: CustomTextField,
@@ -128,6 +139,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
       {
         label: "Регион",
         type: "text",
+        name: "addres",
         required: true,
         options: [
           { value: "Almaty", label: "Алматинская область" },
@@ -142,6 +154,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         type: "text",
         required: true,
         Component: CustomTextField,
+        name: "region",
         styleType: "text",
       },
       {
@@ -149,6 +162,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         placeholder: "Введите",
         type: "text",
         required: true,
+        name: "lawAddres",
         Component: CustomTextField,
         styleType: "text",
       },
@@ -162,6 +176,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         placeholder: "Напр. Halyk Bank",
         type: "text",
         required: true,
+        name: "bank",
         Component: CustomTextField,
         styleType: "text",
       },
@@ -170,6 +185,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         placeholder: "Введите",
         type: "number",
         required: true,
+        name: "bik",
         Component: CustomTextField,
         styleType: "number",
       },
@@ -178,6 +194,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         placeholder: "Введите",
         type: "text",
         required: true,
+        name: "iik",
         Component: CustomTextField,
         styleType: "text",
       },
@@ -186,6 +203,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         placeholder: "0",
         type: "number",
         required: true,
+        name: "kbe",
         Component: CustomTextField,
         styleType: "shortNumber",
       },
