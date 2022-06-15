@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React, { FC, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { IOption } from "../constants/contractFields";
 
 const CustomSelect = styled(Select)`
@@ -24,36 +24,39 @@ const CustomMenuItem = styled(MenuItem)`
 
 type Props = {
   options?: IOption[];
+  defaultValue?: string;
+  name: string;
 };
 
-export const Selector: FC<Props> = (props) => {
+export const Selector: FC<Props> = ({ name, defaultValue, ...props }) => {
   const {
     register,
     formState: { errors, isSubmitted },
+    getFieldState,
+    control,
   } = useFormContext();
-  const [region, setRegion] = useState("Almaty");
+  // const [region, setRegion] = useState("Almaty");
 
-  const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setRegion(event.target.value as string);
-  };
-  const selectRegion = register(region, {
-    required: { value: true, message: "Fill it" },
-  });
+  // const handleChange = (event: SelectChangeEvent<unknown>) => {
+  //   setRegion(event.target.value as string);
+  // };
+
   return (
-    <CustomSelect
-      value={region}
-      defaultValue={region}
-      {...selectRegion}
-      onChange={(e) => {
-        selectRegion.onChange(e);
-        handleChange(e);
-      }}
-    >
-      {props.options?.map((option) => (
-        <CustomMenuItem value={option.value} key={option.value}>
-          {option.label}
-        </CustomMenuItem>
-      ))}
-    </CustomSelect>
+    <>
+      <Controller
+        name={name}
+        control={control}
+        defaultValue={defaultValue}
+        render={({ field: { onChange, value } }) => (
+          <CustomSelect value={value} onChange={onChange}>
+            {props.options?.map((option) => (
+              <CustomMenuItem value={option.value} key={option.value}>
+                {option.label}
+              </CustomMenuItem>
+            ))}
+          </CustomSelect>
+        )}
+      />
+    </>
   );
 };
