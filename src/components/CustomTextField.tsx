@@ -1,5 +1,5 @@
 import { styled, TextField } from "@mui/material";
-import React, { FC } from "react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   placeholder?: string;
 };
 
-type FormData = {
+export type FormData = {
   binIin: number;
   companyName: string;
   lastName: string;
@@ -19,6 +19,13 @@ type FormData = {
   phone: number;
   jobTitle: string;
   basisOfAuthority?: string;
+  region: string;
+  district: string;
+  legalAddress: string;
+  bank: string;
+  bik: number;
+  iik: string;
+  kbe: number;
 };
 
 const StyledTextField = styled(TextField)`
@@ -29,10 +36,8 @@ const StyledTextField = styled(TextField)`
 export const CustomTextField: FC<Props> = (props) => {
   const {
     register,
-    setValue,
-    handleSubmit,
-    getFieldState,
     formState: { isSubmitted },
+    getFieldState,
   } = useForm({
     mode: "onChange",
   });
@@ -51,6 +56,16 @@ export const CustomTextField: FC<Props> = (props) => {
       {...register(props.label!, {
         required: { value: props.required!, message: "Fill field" },
       })}
+      error={
+        isSubmitted &&
+        getFieldState(props.label).isTouched &&
+        !!getFieldState(props.label).error
+      }
+      helperText={
+        isSubmitted &&
+        getFieldState(props.label).isTouched &&
+        !!getFieldState(props.label).error?.message
+      }
     />
   );
 };

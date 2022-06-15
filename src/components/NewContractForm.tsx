@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   FormControl,
   FormLabel,
   Grid,
@@ -7,8 +8,9 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import React from "react";
 import { ContractFieldsData } from "../constants/contractFields";
+import { useForm } from "react-hook-form";
+import { FormData } from "./CustomTextField";
 
 const Wrapper = styled(Box)`
   text-align: center;
@@ -75,39 +77,88 @@ const LabelGrid = styled(Grid)`
 const ComponentGrid = styled(Grid)`
   justify-content: left;
 `;
+const ButtonWrapper = styled("div")`
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 20px 30% 40px auto;
+`;
+const SignButton = styled(Button)`
+  width: 240px;
+  background: #dc1832;
+  border: 1px solid #dc1832;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+  border-radius: "1px";
+  padding: 8px 16px;
+  box-sizing: border-box;
+  &:hover {
+    background: #dc1832;
+    border: 1px solid #dc1832;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+  }
+`;
+const PreviewButton = styled(Button)`
+  width: 240px;
+  border: 1px solid #dc1832;
+  color: #dc1832;
+  border-radius: "1px";
+  padding: 8px 16px;
+  &:hover {
+    background: #ffffff;
+    border: 1px solid #dc1832;
+    color: #dc1832;
+  }
+`;
 
 export const NewContractForm = () => {
+  const { handleSubmit } = useForm<FormData>();
+  const onSubmit = handleSubmit((data) => console.log(data));
   return (
     <Wrapper>
-      <FormControl>
-        {ContractFieldsData.map((block) => (
-          <BlockWrapper key={block.title}>
-            <Header>{block.title}</Header>
+      <form onSubmit={onSubmit}>
+        <FormControl>
+          {ContractFieldsData.map((block) => (
+            <BlockWrapper key={block.title}>
+              <Header>{block.title}</Header>
 
-            {block.fields.map(
-              ({ label, Component = Input, required, ...field }) => (
-                <Grid container direction="column" key={label}>
-                  <Field>
-                    <LabelGrid item container>
-                      <CustomLabel focused={false}>
-                        {required && <Asterisk>* </Asterisk>}
-                        {label}
-                        {!required && (
-                          <UnnecessaryText> (необязательный)</UnnecessaryText>
-                        )}
-                        :
-                      </CustomLabel>
-                    </LabelGrid>
-                    <ComponentGrid item container>
-                      <Component {...field} label={label} required={required} />
-                    </ComponentGrid>
-                  </Field>
-                </Grid>
-              )
-            )}
-          </BlockWrapper>
-        ))}
-      </FormControl>
+              {block.fields.map(
+                ({ label, Component = Input, required, ...field }) => (
+                  <Grid container direction="column" key={label}>
+                    <Field>
+                      <LabelGrid item container>
+                        <CustomLabel focused={false}>
+                          {required && <Asterisk>* </Asterisk>}
+                          {label}
+                          {!required && (
+                            <UnnecessaryText> (необязательный)</UnnecessaryText>
+                          )}
+                          :
+                        </CustomLabel>
+                      </LabelGrid>
+                      <ComponentGrid item container>
+                        <Component
+                          {...field}
+                          label={label}
+                          required={required}
+                        />
+                      </ComponentGrid>
+                    </Field>
+                  </Grid>
+                )
+              )}
+            </BlockWrapper>
+          ))}
+        </FormControl>
+        <ButtonWrapper>
+          <PreviewButton variant="outlined" type="submit">
+            Предпросмотр
+          </PreviewButton>
+          <SignButton variant="contained" type="submit">
+            Подписать с ЭЦП
+          </SignButton>
+        </ButtonWrapper>
+      </form>
     </Wrapper>
   );
 };
