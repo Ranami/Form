@@ -11,7 +11,6 @@ import {
 import { ContractFieldsData } from "../constants/contractFields";
 import { FormProvider, useForm } from "react-hook-form";
 
-
 const Wrapper = styled(Box)`
   text-align: center;
   display: flex;
