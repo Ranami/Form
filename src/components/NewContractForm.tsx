@@ -79,19 +79,21 @@ const ComponentGrid = styled(Grid)`
 `;
 const ButtonWrapper = styled("div")`
   display: flex;
-  width: 400px;
+  width: 500px;
   justify-content: space-between;
   gap: 16px;
-  margin: 20px 30% 40px auto;
+  margin: 20px 29.3% 40px auto;
 `;
 const SignButton = styled(Button)`
   width: 240px;
   background: #dc1832;
   border: 1px solid #dc1832;
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
-  border-radius: "1px";
+  border-radius: 2px;
+  height: 38px;
   padding: 8px 16px;
   box-sizing: border-box;
+  text-transform: none;
   &:hover {
     background: #dc1832;
     border: 1px solid #dc1832;
@@ -100,10 +102,12 @@ const SignButton = styled(Button)`
 `;
 const PreviewButton = styled(Button)`
   width: 240px;
+  height: 38px;
   border: 1px solid #dc1832;
   color: #dc1832;
-  border-radius: "1px";
+  border-radius: 2px;
   padding: 8px 16px;
+  text-transform: none;
   &:hover {
     background: #ffffff;
     border: 1px solid #dc1832;
