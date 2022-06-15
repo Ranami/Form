@@ -1,6 +1,6 @@
 import { styled, TextField } from "@mui/material";
 import { FC } from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { StyleType } from "../constants/contractFields";
 
 type Props = {
@@ -31,10 +31,7 @@ export type FormData = {
 };
 
 const StyledTextField = styled(TextField)`
-  display: block;
   justify-self: center;
-  &:focus {
-  }
 `;
 
 const FieldSizes: Record<StyleType, string> = {
@@ -49,9 +46,7 @@ export const CustomTextField: FC<Props> = ({ styleType, ...props }) => {
     register,
     formState: { isSubmitted },
     getFieldState,
-  } = useForm({
-    mode: "onChange",
-  });
+  } = useFormContext();
 
   return (
     <StyledTextField

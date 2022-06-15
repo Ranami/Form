@@ -98,7 +98,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
       },
       {
         label: "Телефон",
-        type: "text",
+        type: "number",
         placeholder: "Введите",
         required: true,
         Component: CustomTextField,

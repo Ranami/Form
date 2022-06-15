@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ContractFieldsData } from "../constants/contractFields";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { FormData } from "./CustomTextField";
 
 const Wrapper = styled(Box)`
@@ -116,53 +116,59 @@ const PreviewButton = styled(Button)`
 `;
 
 export const NewContractForm = () => {
-  const { handleSubmit } = useForm<FormData>();
+  const methods = useForm();
+  const { handleSubmit } = methods;
   const onSubmit = handleSubmit((data) => console.log(data));
   return (
     <Wrapper>
-      <form onSubmit={onSubmit}>
-        <FormControl>
-          {ContractFieldsData.map((block) => (
-            <BlockWrapper key={block.title}>
-              <Header>{block.title}</Header>
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit}>
+          <FormControl>
+            {ContractFieldsData.map((block) => (
+              <BlockWrapper key={block.title}>
+                <Header>{block.title}</Header>
 
-              {block.fields.map(
-                ({ label, Component = Input, required, ...field }) => (
-                  <Grid container direction="column" key={label}>
-                    <Field>
-                      <LabelGrid item container>
-                        <CustomLabel focused={false}>
-                          {required && <Asterisk>* </Asterisk>}
-                          {label}
-                          {!required && (
-                            <UnnecessaryText> (необязательный)</UnnecessaryText>
-                          )}
-                          :
-                        </CustomLabel>
-                      </LabelGrid>
-                      <ComponentGrid item container>
-                        <Component
-                          {...field}
-                          label={label}
-                          required={required}
-                        />
-                      </ComponentGrid>
-                    </Field>
-                  </Grid>
-                )
-              )}
-            </BlockWrapper>
-          ))}
-        </FormControl>
-        <ButtonWrapper>
-          <PreviewButton variant="outlined" type="submit">
-            Предпросмотр
-          </PreviewButton>
-          <SignButton variant="contained" type="submit">
-            Подписать с ЭЦП
-          </SignButton>
-        </ButtonWrapper>
-      </form>
+                {block.fields.map(
+                  ({ label, Component = Input, required, ...field }) => (
+                    <Grid container direction="column" key={label}>
+                      <Field>
+                        <LabelGrid item container>
+                          <CustomLabel focused={false}>
+                            {required && <Asterisk>* </Asterisk>}
+                            {label}
+                            {!required && (
+                              <UnnecessaryText>
+                                {" "}
+                                (необязательный)
+                              </UnnecessaryText>
+                            )}
+                            :
+                          </CustomLabel>
+                        </LabelGrid>
+                        <ComponentGrid item container>
+                          <Component
+                            {...field}
+                            label={label}
+                            required={required}
+                          />
+                        </ComponentGrid>
+                      </Field>
+                    </Grid>
+                  )
+                )}
+              </BlockWrapper>
+            ))}
+          </FormControl>
+          <ButtonWrapper>
+            <PreviewButton variant="outlined" type="submit">
+              Предпросмотр
+            </PreviewButton>
+            <SignButton variant="contained" type="submit">
+              Подписать с ЭЦП
+            </SignButton>
+          </ButtonWrapper>
+        </form>
+      </FormProvider>
     </Wrapper>
   );
 };
