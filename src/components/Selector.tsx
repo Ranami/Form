@@ -1,5 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React, { FC, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { IOption } from "../constants/contractFields";
 
 const CustomSelect = styled(Select)`
@@ -26,14 +27,28 @@ type Props = {
 };
 
 export const Selector: FC<Props> = (props) => {
+  const {
+    register,
+    formState: { errors, isSubmitted },
+  } = useFormContext();
   const [region, setRegion] = useState("Almaty");
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     setRegion(event.target.value as string);
   };
-
+  const selectRegion = register(region, {
+    required: { value: true, message: "Fill it" },
+  });
   return (
-    <CustomSelect value={region} defaultValue={region} onChange={handleChange}>
+    <CustomSelect
+      value={region}
+      defaultValue={region}
+      {...selectRegion}
+      onChange={(e) => {
+        selectRegion.onChange(e);
+        handleChange(e);
+      }}
+    >
       {props.options?.map((option) => (
         <CustomMenuItem value={option.value} key={option.value}>
           {option.label}
