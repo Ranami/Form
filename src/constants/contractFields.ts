@@ -141,6 +141,7 @@ export const ContractFieldsData: IContractFieldsData[] = [
         type: "text",
         name: "addres",
         required: true,
+        defaultValue: "",
         options: [
           { value: "Almaty", label: "Алматинская область" },
           { value: "East", label: "Восточно-Казахстанская область" },
