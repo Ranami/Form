@@ -9,10 +9,7 @@ import React, { FC } from "react";
 import { IOption } from "../constants/contractFields";
 
 const CustomRadio = styled(Radio)`
-  &:checked {
-    color: #dc1832;
-  }
-  font-size: 20px;
+  color: rgba(41, 52, 82, 0.25);
 `;
 
 const CustomLabel = styled(Typography)`

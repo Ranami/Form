@@ -33,6 +33,8 @@ export type FormData = {
 const StyledTextField = styled(TextField)`
   display: block;
   justify-self: center;
+  &:focus {
+  }
 `;
 
 const FieldSizes: Record<StyleType, string> = {

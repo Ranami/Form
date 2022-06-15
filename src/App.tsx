@@ -1,13 +1,22 @@
 import React from "react";
 import { NewContractForm } from "./components/NewContractForm";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-type Props = {};
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#dc1832",
+    },
+  },
+});
 
-const App = (props: Props) => {
+const App = () => {
   return (
-    <div>
-      <NewContractForm />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <NewContractForm />
+      </div>
+    </ThemeProvider>
   );
 };
 
