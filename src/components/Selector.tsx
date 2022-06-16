@@ -42,11 +42,12 @@ export const Selector: FC<Props> = ({ name, defaultValue, ...props }) => {
   // };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <Controller
         name={name}
         control={control}
         defaultValue={defaultValue}
+        rules={{ required: { value: true, message: "Заполните поле" } }}
         render={({ field: { onChange, value } }) => (
           <CustomSelect value={value} onChange={onChange}>
             {props.options?.map((option) => (
@@ -57,6 +58,9 @@ export const Selector: FC<Props> = ({ name, defaultValue, ...props }) => {
           </CustomSelect>
         )}
       />
-    </>
+      <div style={{ color: "green", textAlign: "left" }}>
+        {errors[name] && errors[name].message}
+      </div>
+    </div>
   );
 };
