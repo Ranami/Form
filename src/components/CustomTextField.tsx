@@ -1,6 +1,6 @@
 import { styled, TextField } from "@mui/material";
-import { ChangeEventHandler, FC, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { FC } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { StyleType } from "../constants/contractFields";
 import { validationOptions } from "../utils/validationOptions";
 import InputMask from "react-input-mask";
@@ -13,25 +13,6 @@ type Props = {
   styleType?: StyleType;
   name: string;
 };
-
-// export type FormData = {
-//   binIin: number;
-//   companyName: string;
-//   lastName: string;
-//   firstName: string;
-//   middleName?: string;
-//   email: string;
-//   phone: number;
-//   jobTitle: string;
-//   basisOfAuthority?: string;
-//   region: string;
-//   district: string;
-//   legalAddress: string;
-//   bank: string;
-//   bik: number;
-//   iik: string;
-//   kbe: number;
-// };
 
 const StyledTextField = styled(TextField)`
   justify-self: center;
@@ -49,38 +30,71 @@ export const CustomTextField: FC<Props> = ({ styleType, ...props }) => {
     register,
     formState: { errors, isSubmitted },
     getFieldState,
+    control,
   } = useFormContext();
 
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [bikNumber, setbikNumber] = useState("");
-  const phoneMaskField = register("phone", {
-    required: { value: true, message: "Fill it" },
-  });
-  const bikMaskField = register("bik", {
-    required: { value: true, message: "Fill it" },
-  });
   return (
     <div>
       {props.name === "phone" ? (
-        <InputMask
-          mask="+7 (999) 999 99 99"
-          value={phoneNumber}
-          {...phoneMaskField}
-          onChange={(e) => {
-            phoneMaskField.onChange(e);
-            setPhoneNumber(e.target.value);
-          }}
-        />
+        <>
+          <Controller
+            name={props.name}
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value }, formState: { errors } }) => (
+              <InputMask
+                mask="+7 (999) 999 99 99"
+                value={value}
+                onChange={onChange}
+                disabled={false}
+              >
+                <StyledTextField
+                  placeholder={props.placeholder}
+                  inputProps={{
+                    style: {
+                      boxSizing: "border-box",
+                      height: "32px",
+                      padding: "5px 12px",
+                      width: FieldSizes[styleType as keyof typeof FieldSizes],
+                      background:
+                        styleType === "number" ? "#F5F5F5" : "#FFFFFF",
+                    },
+                  }}
+                />
+              </InputMask>
+            )}
+          />
+        </>
       ) : props.name === "bik" ? (
-        <InputMask
-          mask="999 999 999"
-          value={bikNumber}
-          {...bikMaskField}
-          onChange={(e) => {
-            bikMaskField.onChange(e);
-            setbikNumber(e.target.value);
-          }}
-        />
+        <>
+          <Controller
+            name={props.name}
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value }, formState: { errors } }) => (
+              <InputMask
+                mask="9999 9999 9999"
+                value={value}
+                onChange={onChange}
+                disabled={false}
+              >
+                <StyledTextField
+                  placeholder={props.placeholder}
+                  inputProps={{
+                    style: {
+                      boxSizing: "border-box",
+                      height: "32px",
+                      padding: "5px 12px",
+                      width: FieldSizes[styleType as keyof typeof FieldSizes],
+                      background:
+                        styleType === "number" ? "#F5F5F5" : "#FFFFFF",
+                    },
+                  }}
+                />
+              </InputMask>
+            )}
+          />
+        </>
       ) : (
         <>
           <StyledTextField
